@@ -1,59 +1,70 @@
 # Stage 1: The Building Blocks of JavaScript
 
-Welcome to the first stage of your JavaScript journey! In this module, we are focusing on the absolute fundamentals: how a computer "remembers" things and how it manipulates basic information.
-
-By the end of this stage, you will understand how to store data, check its type, combine text, do basic math, and compare values.
+This module focuses on the absolute fundamentals: storing data, basic operators, and comparing values.
 
 ---
 
 ## 0. The Basics: Console & Comments
 
-Before we write code, you need to know how to see the results and take notes:
+- **`console.log()`**: Prints output to your screen.
+- **`// Comments`**: Ignored by JavaScript; used for notes.
 
-- **`console.log()`**: Your megaphone. It prints whatever is inside the parentheses to your screen so you can see what your code is doing.
-- **`// Comments`**: JavaScript ignores anything after `//` on a line. Use them to leave notes for yourself!
+```javascript
+console.log("Hello, World!"); // Prints text to the console
+```
 
 ---
 
 ## 1. Variables (`let` vs `const`)
 
-Think of variables as labeled boxes where you can store information. In modern JavaScript, we use two main keywords to create these boxes: `let` and `const`.
-
-- **`let`**: A box whose contents _can_ change later. Use this for values that will update (like a score in a game).
-- **`const`**: A box that is sealed shut once you put something in it. Its contents _cannot_ change. Use this for values that should remain constant (like your birth year).
-
-### Syntax Example:
+- **`let`**: A variable whose value **can** be reassigned.
+- **`const`**: A variable whose value **cannot** be reassigned after it is set.
 
 ```javascript
 let currentScore = 0;
-currentScore = 10; // This is fine! We used 'let'.
+currentScore = 10; // Fine!
 
 const myName = "Alex";
-myName = "Sam"; // ERROR! You cannot reassign a 'const'.
+// myName = "Sam"; // ERROR! Cannot reassign const.
 ```
 
-> **Pro-Tip: Naming Rules**
-> Variable names cannot contain spaces. By convention, JavaScript uses **camelCase** (e.g., `currentScore`, `hasDriverLicense`).
+> **Naming Rule (camelCase)**
+> Variable names cannot have spaces. By convention, use camelCase (e.g., `currentScore`, `hasDriverLicense`).
 
 ### 🏋️ Micro-Exercise: The Swap
 
-Create two variables, `a = 5` and `b = 10`. Write the code to swap their values so `a` becomes 10 and `b` becomes 5, without just typing `a = 10` and `b = 5`.
-_(Hint: You might need a temporary third "box" to hold one of the values while you swap them!)_
+**1. Setup:**
+
+```javascript
+let a = 5;
+let b = 10;
+```
+
+**2. Your Task:**
+
+- Create a temporary variable named `temp` and store the value of `a` in it.
+- Assign the value of `b` to `a`.
+- Assign the value of `temp` to `b`.
+- Log the values of `a` and `b` using `console.log(a, b)`.
+
+**3. Expected Console Output:**
+
+```text
+10 5
+```
 
 ---
 
 ## 2. Data Types
 
-Now that we have boxes (variables), what can we put inside them? In JavaScript, there are three primary "primitive" data types you will use every day:
+JavaScript has 4 core primitive data types:
 
-1.  **Strings:** Text. Always wrapped in quotes (single `'...'` or double `"..."`).
-2.  **Numbers:** Mathematical numbers (both whole numbers and decimals). No quotes!
-3.  **Booleans:** True or False. That's it. Used for making decisions later.
-4.  **Undefined / Null:** The "empty" types. `undefined` means a variable was created but has no value yet. `null` is when you _intentionally_ set a box to be completely empty.
+1.  **Strings:** Text. Wrapped in quotes (`'...'` or `"..."`).
+2.  **Numbers:** Mathematical numbers (decimals or integers). No quotes!
+3.  **Booleans:** `true` or `false`.
+4.  **Undefined / Null:** `undefined` means a variable is declared but empty. `null` is an intentional empty value.
 
-You can use the built-in `typeof` operator to ask JavaScript what type of data is inside a variable.
-
-### Syntax Example:
+Use `typeof` to check the data type:
 
 ```javascript
 let greeting = "Hello there!"; // String
@@ -65,96 +76,188 @@ console.log(typeof temperature); // Logs: "number"
 
 ### 🏋️ Micro-Exercise: The Inspector
 
-Create three variables: a string, a number, and a boolean. Use `typeof` wrapped in a `console.log()` to check the data type of each and print it to your console.
+**1. Setup:**
+
+```javascript
+const val1 = "Hello";
+const val2 = 99;
+const val3 = false;
+```
+
+**2. Your Task:**
+
+- Use the `typeof` operator inside `console.log()` to print the data type of `val1`, `val2`, and `val3`.
+
+**3. Expected Console Output:**
+
+```text
+string
+number
+boolean
+```
 
 ---
 
 ## 3. Template Literals
 
-Often, you will need to combine strings together, or insert a variable _inside_ a string. In the old days, we used the `+` symbol (e.g., `"Hello " + name + "!"`). Now, we use **Template Literals**.
-
-Template literals use **backticks** (`` ` ``) instead of normal quotes. To inject a variable directly into the string, you use the `${variableName}` syntax.
-
-### Syntax Example:
+Use **backticks** (`` ` ``) instead of standard quotes to inject variables directly into a string using `${variableName}` syntax.
 
 ```javascript
 const userName = "Jordan";
 const notifications = 5;
 
-// Using backticks to inject variables smoothly:
+// Modern Template Literal:
 const message = `Welcome back, ${userName}! You have ${notifications} unread messages.`;
 console.log(message);
 ```
 
 ### 🏋️ Micro-Exercise: The Bio
 
-Create three variables for your `name`, `age`, and a `hobby`. Use template literals to log a single sentence: _"Hi, I'm [Name], I'm [Age] years old, and I love [Hobby]."_
+**1. Setup:**
+
+```javascript
+const name = "Alex";
+const age = 25;
+const hobby = "coding";
+```
+
+**2. Your Task:**
+
+- Create a template literal using backticks (`` ` ``) and the setup variables to log a single sentence.
+
+**3. Expected Console Output:**
+
+```text
+Hi, I'm Alex, I'm 25 years old, and I love coding.
+```
 
 ---
 
 ## 4. Basic Operators
 
-JavaScript can act as a very powerful calculator. You have access to standard mathematical operators:
+Use standard mathematical operators to calculate values:
 
-- `+` (Addition)
-- `-` (Subtraction)
-- `*` (Multiplication)
-- `/` (Division)
-- `%` (Modulo / Remainder) - _This one returns the remainder of a division. (e.g., `10 % 3` is `1` because 3 goes into 10 three times with 1 left over)._
-
-### Syntax Example:
+- `+` (Addition), `-` (Subtraction), `*` (Multiplication), `/` (Division)
+- `%` (Modulo / Remainder): returns remainder of division (e.g., `10 % 3` is `1`).
+- `+=`, `-=`, `++`, `--` (Shorthand operators).
 
 ```javascript
-const totalApples = 10 + 5; // 15
-const half = totalApples / 2; // 7.5
-
-// Shorthand Assignments and Increments:
 let score = 10;
-score += 5; // Same as score = score + 5 (Result: 15)
-score -= 2; // Same as score = score - 2 (Result: 13)
-score++; // Same as score += 1 OR score = score + 1 (Result: 14)
+score += 5; // score = 15
+score--; // score = 14
 ```
 
 ### 🏋️ Micro-Exercise: The Splitter
 
-Imagine you and your friends go out to dinner. The total bill is **$124**, and it needs to be split evenly between **3** people. Write the math to calculate how much each person pays, and log it to the console in a readable sentence using template literals.
+**1. Setup:**
+
+```javascript
+const totalBill = 124;
+const people = 3;
+```
+
+**2. Your Task:**
+
+- Create a variable `amountPerPerson` and calculate the split cost.
+- Log the result in a readable sentence using a template literal.
+
+**3. Expected Console Output:**
+
+```text
+Each person pays $41.333333333333336.
+```
 
 ---
 
 ## 5. Comparison Operators
 
-Instead of doing math, these operators _compare_ values and always result in a **Boolean** (`true` or `false`). These are essential for the next lesson!
+Compare two values and return a **Boolean** (`true` or `false`):
 
 - `>` / `<` (Greater / Less than)
 - `>=` / `<=` (Greater / Less than or equal to)
 - `===` (Strictly equal to)
 - `!==` (Not equal to)
 
-### Syntax Example:
-
 ```javascript
-console.log(10 > 5); // Logs: true
-console.log("apple" === "orange"); // Logs: false
+console.log(10 > 5); // true
+console.log("apple" === "orange"); // false
 ```
 
 ### 🏋️ Micro-Exercise: The Age Check
 
-Create a variable `myAge` and set it to your age. Then, use a comparison operator to check if `myAge` is greater than or equal to `18`. Log the result to the console.
+**1. Setup:**
+
+```javascript
+const myAge = 20;
+```
+
+**2. Your Task:**
+
+- Use a comparison operator to check if `myAge` is greater than or equal to `18`.
+- Log the result using `console.log()`.
+
+**3. Expected Console Output:**
+
+```text
+true
+```
 
 ---
 
-## 🚀 Stage 1 Project: The "Life in Weeks" Calculator
+## ⚠️ Common Pitfalls
+
+1.  **Reassigning `const`:**
+    ```javascript
+    const userRole = "admin";
+    userRole = "editor"; // ❌ TypeError: Assignment to constant variable.
+    ```
+2.  **Missing String Quotes:**
+    ```javascript
+    let name = Alex; // ❌ ReferenceError: Alex is not defined
+    let name = "Alex"; //  Correct
+    ```
+3.  **Mixing Numbers and Strings:**
+    ```javascript
+    console.log(5 + "5"); // Logs "55" (string concatenation) instead of 10.
+    ```
+
+---
+
+## 🧠 Brain Teasers & Concept Checks
+
+Test your knowledge before moving to the project. Try to predict the outputs:
+
+1.  What does `console.log(17 % 5)` print?
+2.  What is the type of `result` in: `let result = typeof 42;`?
+3.  What does this output?
+    ```javascript
+    const score = 100;
+    score++;
+    console.log(score);
+    ```
+
+---
+
+## 🚀 Stage 1 Project: Next Century Countdown
 
 Now it's time to put all of these building blocks together into a single script.
 
-**The Goal:** Write a program that calculates how many days, weeks, and months a person has left to live, assuming they will live to be exactly 90 years old.
+**The Goal:** Write a program that calculates how many days, weeks, and months are left until we reach the next century (the year 2100).
 
-**Instructions:**
+**1. Starter Setup:**
+```javascript
+const currentYear = 2026;
+const targetYear = 2100;
+```
 
-1. Create a `const` variable for your `currentAge`.
-2. Calculate the _years remaining_ by subtracting your age from 90.
-3. Calculate the _days remaining_ (years remaining \* 365).
-4. Calculate the _weeks remaining_ (years remaining \* 52).
-5. Calculate the _months remaining_ (years remaining \* 12).
-6. Use a template literal to log the final message to the console:
-   _"You have \[x\] days, \[y\] weeks, and \[z\] months left."_
+**2. Your Task:**
+- Calculate the number of remaining years by subtracting `currentYear` from `targetYear`. Store this in a variable named `yearsRemaining`.
+- Calculate the remaining days (`yearsRemaining` multiplied by `365`). Store this in a variable named `daysRemaining`.
+- Calculate the remaining weeks (`yearsRemaining` multiplied by `52`). Store this in a variable named `weeksRemaining`.
+- Calculate the remaining months (`yearsRemaining` multiplied by `12`). Store this in a variable named `monthsRemaining`.
+- Log the final message to the console using a template literal.
+
+**3. Expected Console Output:**
+```text
+There are 27010 days, 3848 weeks, and 888 months left until the next century!
+```

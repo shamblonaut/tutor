@@ -23,10 +23,10 @@ This is a quick-reference guide covering the core concepts and syntax from all s
 
 - **Declaration**: Use `function name(parameter) { ... }` to create reusable blocks of code.
 - **Returns**: The `return` keyword hands data back to whatever called the function.
-- **Arrow Functions**: Shorter syntax: `const name = (param) => { ... }`.
-- **Scope**: Variables declared inside a block (`{ ... }`) cannot be seen outside that block.
+- **Arrow Functions**: Shorter syntax: `const name = (param) => { ... }`. _(Remember: removing `{}` implicitly returns the value; keeping `{}` requires an explicit `return`!)_
+- **Scope**: Variables declared inside a block (`{ ... }`) cannot be seen outside that block. Avoid **variable shadowing** (naming a local variable the same as a global variable).
 
-## Stage 4: Arrays & Objects
+## Stage 4: Arrays & Objects (React Foundations)
 
 - **Arrays**: Lists of data created with `[]`. They start at index `0`.
 - **Push/Pop**: Use `.push()` to add to the end and `.pop()` to remove from the end.
@@ -44,6 +44,7 @@ This is a quick-reference guide covering the core concepts and syntax from all s
 - **Selecting**: Find elements using `document.getElementById()` or `document.querySelector()`.
 - **Events**: Use `element.addEventListener('event', () => { ... })` to respond to user actions.
 - **Styles & Classes**: Modify elements via `.style.property` or `.classList.add/remove/toggle()`.
+- **Custom Data Attributes**: Store extra metadata in HTML using `data-*` and access it in JS using `element.dataset.*`.
 - **Creating**: Generate new elements with `document.createElement()` and add them with `.appendChild()`.
 
 ## Stage 6: Modern Asynchronous JS

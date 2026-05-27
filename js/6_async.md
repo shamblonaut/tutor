@@ -1,118 +1,205 @@
 # Stage 6: The Modern Web (Asynchronous JavaScript)
 
-Welcome to the final stage! Until now, your code has been "synchronous," meaning it runs one line at a time, waiting for the previous line to finish. But the real web is "asynchronous." When you fetch data from a server, you don't want the browser to freeze while waiting. This stage is about managing time and external data.
+This module covers asynchronous programming: scheduling tasks, managing futures (Promises), querying APIs, and using modern `async`/`await` syntax.
 
 ---
 
 ## 1. Handling Time (`setTimeout`)
 
-JavaScript uses the **Event Loop** to schedule tasks to happen later while the rest of the code continues to run. The `setTimeout` function is the simplest way to see this in action.
-
-### Syntax Example
+Schedule a callback function to run after a specified delay (in milliseconds). The rest of your code runs without blocking.
 
 ```javascript
-console.log("Step 1");
+console.log("Start");
 
+// Syntax: setTimeout(callbackFunction, delayInMs)
 setTimeout(() => {
-  console.log("Step 2 (after 2 seconds)");
+  console.log("Logged after 2 seconds");
 }, 2000);
 
-console.log("Step 3");
+console.log("End"); // Logs immediately after "Start", BEFORE the timeout finishes!
 ```
-
-- **Step 1** logs immediately.
-- **Step 3** logs immediately after Step 1.
-- **Step 2** logs after a 2-second delay because it was "scheduled" for later.
 
 ### 🏋️ Micro-Exercise: The Delay
 
-- **Task**: Write a script that logs "Game Loading..."
-- **Action**: Use `setTimeout` to wait 3 seconds, then log "Game Ready!"
+**1. Setup:**
+None.
+
+**2. Your Task:**
+- Log `"Game Loading..."` to the console.
+- Use `setTimeout()` to schedule a callback function to run after `3000` milliseconds (3 seconds).
+- Inside the callback function, log `"Game Ready!"` to the console.
+
+**3. Expected Console Output:**
+```text
+Game Loading...
+(3-second delay here)
+Game Ready!
+```
 
 ---
 
 ## 2. Promises: The "I Owe You"
 
-A **Promise** represents a value that might be available now, later, or never. It has three states: **Pending**, **Fulfilled** (Success), and **Rejected** (Failure).
+An object representing the eventual success or failure of an asynchronous task.
 
-### Syntax Example
+- **States:** Pending, Fulfilled (Success), or Rejected (Failure).
+- **Handlers:** Use `.then()` for success and `.catch()` for errors.
 
 ```javascript
-const myPromise = new Promise((resolve, reject) => {
-  let success = true;
-  if (success) {
-    resolve("Operation Successful!");
+const orderPizza = new Promise((resolve, reject) => {
+  let isPizzaReady = true;
+  if (isPizzaReady) {
+    resolve("Pizza Delivered!");
   } else {
-    reject("Operation Failed.");
+    reject("Order Cancelled.");
   }
 });
 
-myPromise
-  .then((data) => console.log(data)) // Runs on resolve
-  .catch((error) => console.error(error)); // Runs on reject
+orderPizza
+  .then((message) => console.log(message))
+  .catch((error) => console.error(error));
 ```
 
 ### 🏋️ Micro-Exercise: The Coin Flip
 
-- **Task**: Create a function that returns a Promise.
-- **Action**: Generate a random number; if it is $> 0.5$, `resolve("Heads!")`, otherwise `reject("Tails!")`.
+**1. Setup:**
+None.
+
+**2. Your Task:**
+- Create a function called `flipCoin` that returns a `new Promise()`.
+- Inside the Promise, generate a random number using `Math.random()`.
+- If the number is greater than `0.5`, call `resolve()` with the message `"Heads!"`.
+- Otherwise, call `reject()` with the message `"Tails!"`.
+- Call your `flipCoin()` function, and handle the result by chaining `.then()` (to log the success message) and `.catch()` (to log the failure message).
+
+**3. Expected Console Output:**
+```text
+Heads!  (or Tails!, randomly)
+```
 
 ---
 
 ## 3. The Fetch API
 
-The `fetch()` function allows you to request data from external websites (APIs). It returns a Promise that resolves into a Response object.
-
-### Syntax Example
+Request data from external servers (APIs). `fetch` returns a Promise resolving to a Response object. You must convert the raw response to JSON.
 
 ```javascript
 fetch("https://jsonplaceholder.typicode.com/posts/1")
-  .then((response) => response.json()) // Converts the raw data to a JS object
-  .then((data) => console.log(data))
-  .catch((err) => console.log("Error:", err));
+  .then((response) => response.json()) // 1. Convert raw body to JavaScript object
+  .then((data) => console.log(data))   // 2. Use the data
+  .catch((err) => console.error("Error:", err));
 ```
 
 ### 🏋️ Micro-Exercise: The Fact Finder
 
-- **Task**: Use `fetch()` to get a random activity from a public API.
-- **Action**: Log the activity name to the console.
+**1. Setup:**
+None.
+
+**2. Your Task:**
+- Use `fetch()` to make an HTTP request to: `https://jsonplaceholder.typicode.com/posts/1`
+- Chain a `.then()` to parse the response using `.json()`.
+- Chain another `.then()` that takes the parsed `data` and logs its `title` property (`data.title`) to the console.
+- Chain a `.catch()` block to log any network errors.
+
+**3. Expected Console Output:**
+```text
+sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+```
 
 ---
 
 ## 4. Modern Async (`async` / `await`)
 
-`async` and `await` are modern keywords that make asynchronous code look and read like simple, linear code.
+A cleaner syntax to handle Promises synchronously without nesting `.then()` calls.
 
-- **`async`**: Declares that a function contains asynchronous operations.
-- **`await`**: Pauses the function execution until a Promise is resolved.
-
-### Syntax Example
+- **`async`**: Declares that a function returns a Promise and can contain `await`.
+- **`await`**: Pauses function execution until a Promise resolves.
+- **Error Handling:** Use `try/catch` blocks.
 
 ```javascript
-async function getData() {
+async function fetchPost() {
   try {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts/1",
-    );
-    const data = await response.json();
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    const data = await response.json(); // Wait for body parsing
     console.log(data);
   } catch (error) {
-    console.log("Something went wrong:", error);
+    console.error("Fetch failed:", error);
   }
 }
 
-getData();
+fetchPost();
 ```
 
 ---
 
-## 🚀 Stage 6 Project: The Mood-Based Movie Finder
+## ⚠️ Common Pitfalls
 
-**The Goal**: Use a real-world API (like TMDB) to display movies based on a "mood" selected by the user.
+1.  **Forgetting to parse the response with `.json()`:**
+    `fetch()` resolves to a Response wrapper, not the raw data itself. You must parse the body!
+    ```javascript
+    const response = await fetch("...");
+    console.log(response); // ❌ Logs response wrapper metadata, not the JSON content.
+    const data = await response.json(); //  Correct
+    ```
+2.  **Forgetting the `await` keyword:**
+    ```javascript
+    async function getData() {
+      const data = fetch("..."); // ❌ Assigns a Promise (pending state) instead of the actual data.
+      const data = await fetch("..."); //  Correct
+    }
+    ```
+3.  **Forgetting `try/catch`:**
+    If a fetch request fails (e.g., offline, bad URL), it will throw an unhandled promise rejection error and crash your app unless caught.
 
-**Instructions**:
+---
 
-1. **HTML Setup**: Create a `<select>` dropdown with moods (e.g., "Happy", "Scary", "Excited") and a `<div>` for results.
-2. **The Logic**: Write an `async` function that fetches movie data from an API based on the selected genre.
-3. **Display**: Randomly pick one movie from the results and update the DOM with its title and poster image.
-4. **Error Handling**: Include a `try/catch` block to show a user-friendly message if the API is down.
+## 🧠 Brain Teasers & Concept Checks
+
+Predict the outputs and execution sequence:
+
+1.  What is the print order of these logs?
+    ```javascript
+    console.log("A");
+    setTimeout(() => console.log("B"), 0);
+    console.log("C");
+    ```
+2.  What is the value of `result` here?
+    ```javascript
+    async function getValue() {
+      return 42;
+    }
+    const result = getValue();
+    console.log(result); // Is it 42 or something else?
+    ```
+
+---
+
+## 🚀 Stage 6 Project: The Random Joke Generator
+
+Build a webpage where clicking a button fetches a random joke from a public API and displays the setup and punchline with a slight delay.
+
+**1. Starter Setup (HTML):**
+```html
+<button id="joke-btn">Tell me a joke!</button>
+<div id="joke-container">
+  <p id="setup"></p>
+  <p id="punchline" style="font-style: italic; color: gray;"></p>
+</div>
+```
+
+**2. Your Task (JavaScript):**
+1.  **Select DOM Elements:** Select the button (`#joke-btn`), setup paragraph (`#setup`), and punchline paragraph (`#punchline`) and store them in variables.
+2.  **Add click listener:** Add a `"click"` event listener to the button.
+3.  **Implement asynchronous fetch:** Inside the click callback, write an `async` function (or declare the callback itself as `async`):
+    - Inside a `try/catch` block:
+      - Clear any existing text inside both the setup and punchline paragraphs (`innerText = ""`).
+      - Fetch a random joke: `const response = await fetch("https://official-joke-api.appspot.com/random_joke");`
+      - Parse the response: `const data = await response.json();`
+      - Display the setup text: Set the setup paragraph's `.innerText` to `data.setup`.
+      - Delay the punchline: Use `setTimeout()` to wait `2000` milliseconds (2 seconds), then set the punchline paragraph's `.innerText` to `data.punchline`.
+    - In the `catch(error)` block:
+      - Log the error to the console.
+      - Set the setup paragraph's `.innerText` to `"Oops! Failed to load joke. Try again."`.
+
+**3. Expected DOM Result:**
+Clicking the button displays the joke's setup immediately (e.g. `"Why did the programmer quit their job?"`), and then 2 seconds later, the punchline (e.g. `"Because they didn't get arrays."`) fades in.

@@ -1,108 +1,115 @@
 # Stage 3: Functional Foundations
 
-Welcome to Stage 3! Up until now, we've written code that runs once and is done. But what if you want to run the same logic multiple times without copy-pasting it?
-
-Enter **Functions**. Functions are like recipes. You write the instructions once, and then you can "cook" that recipe whenever you want, even swapping out the ingredients (data) each time. This is how we keep our code clean, organized, and reusable.
+This module covers functions: creating blocks of reusable code, managing inputs and outputs, and understanding scopes.
 
 ---
 
 ## 1. Function Declaration & Parameters
 
-To create a function, you declare it, name it, and define what it does inside curly braces `{}`. To use it, you "call" it by its name followed by parentheses `()`.
+Create a reusable recipe of code. Define it once, then execute (call) it whenever needed.
 
-Functions can also accept inputs, called **parameters**. Think of parameters as empty variables waiting to be filled when the function is called.
-
-> **Note:** You'll also hear the term **arguments**. Parameters are the "labels" in the recipe, while Arguments are the actual ingredients you pass in.
-
-### Syntax Example:
+- **Parameters:** Placeholders inside the function definition.
+- **Arguments:** Actual values passed to the function when calling it.
 
 ```javascript
-// Defining the function (the recipe)
+// Definition (filling is a parameter)
 function makeSandwich(filling) {
   console.log(`Putting ${filling} between two slices of bread.`);
 }
 
-// Calling the function (cooking the recipe)
-makeSandwich("peanut butter");
+// Execution ("turkey" is an argument)
 makeSandwich("turkey");
 ```
 
 ### 🏋️ Micro-Exercise: The Greeter
 
-Write a function called `sayHello` that takes a `name` as a parameter. Inside the function, `console.log` a greeting like `"Hello, [Name]!"`. Call your function three times with three different names to see it in action.
+**1. Setup:**
+None (declare the function directly).
+
+**2. Your Task:**
+- Write a function called `sayHello` that takes a `name` parameter.
+- Inside the function, log a template literal greeting: `"Hello, [Name]!"`.
+- Call your function twice: first with the argument `"Alex"`, and then with `"Sam"`.
+
+**3. Expected Console Output:**
+```text
+Hello, Alex!
+Hello, Sam!
+```
 
 ---
 
 ## 2. Return Statements
 
-`console.log()` is great for us humans to see what's happening, but it doesn't give the data back to the computer to use later. To get data _out_ of a function, we use the `return` keyword.
-
-When a function hits a `return` statement, it immediately stops running and spits that value out.
-
-### Syntax Example:
+Use the `return` keyword to hand data back to the code that called the function. A function **stops executing** immediately when it reaches a `return` statement.
 
 ```javascript
 function addNumbers(num1, num2) {
-  let sum = num1 + num2;
-  return sum; // Hands the result back to the program
+  return num1 + num2; // Hands the result back
 }
 
-// We can catch the returned value in a new variable:
 let myTotal = addNumbers(5, 10);
-console.log(`The total is ${myTotal}`); // Logs: The total is 15
+console.log(myTotal); // Logs: 15
 ```
 
 ### 🏋️ Micro-Exercise: The Calculator
 
-Create a function called `multiply` that takes two numbers as parameters and **returns** their product. Outside the function, create a new variable to "catch" the returned result, and then log that variable to the console.
+**1. Setup:**
+None (declare the function directly).
+
+**2. Your Task:**
+- Create a function called `multiply` that takes two parameters: `num1` and `num2`.
+- Inside the function, **return** their product (`num1 * num2`).
+- Call the function passing `3` and `5` as arguments, catch the returned value in a variable named `result`, and log `result`.
+
+**3. Expected Console Output:**
+```text
+15
+```
 
 ---
 
 ## 3. Arrow Functions
 
-In modern JavaScript, there is a shorter, sleeker way to write functions called **Arrow Functions**. They do exactly the same thing but use an arrow `=>` instead of the `function` keyword.
+A shorter syntax for writing functions using the `=>` operator.
 
-If your function only has one line of code that returns something, you can even skip the curly braces and the `return` keyword entirely!
-
-### Syntax Example:
+- **Standard Arrow:** `const double = (n) => { return n * 2; };`
+- **Implicit Return:** If the function is a single-line expression, skip `{}` and `return` to return the value implicitly.
 
 ```javascript
-// Old way:
-function double(num) {
-  return num * 2;
-}
-
-// Modern Arrow Function:
-const double = (num) => {
-  return num * 2;
+// Standard Arrow
+const add = (a, b) => {
+  return a + b;
 };
 
-// Ultra-short Arrow Function (Implicit Return):
-const doubleShort = (num) => num * 2;
+// Implicit Return Arrow
+const double = (num) => num * 2;
 ```
-
-> **Watch Out: The Order Rule**
->
-> You can call a regular `function` even if you write it later in your code. However, **arrow functions must be defined before you call them**, or your code will crash!
 
 ### 🏋️ Micro-Exercise: The Refactor
 
-Take the `multiply` function you wrote in the previous exercise and rewrite it as a single-line arrow function. Test it to make sure it still works!
+**1. Setup:**
+None.
+
+**2. Your Task:**
+- Rewrite the `multiply` function from the previous exercise as a single-line arrow function named `multiplyArrow` using an **implicit return**.
+- Call it with `3` and `5`, and log the result.
+
+**3. Expected Console Output:**
+```text
+15
+```
 
 ---
 
 ## 4. Anonymous Functions & Callbacks
 
-An **Anonymous Function** is simply a function without a name. We often use these as "one-off" tools, especially when we pass one function into another function. This is called a **Callback**.
-
-You will see this a lot in later stages when we talk about Arrays and the DOM.
-
-### Syntax Example:
+An **Anonymous Function** has no name. It is often passed directly into another function as a **Callback** to run later.
 
 ```javascript
-// We are passing an anonymous arrow function INTO setTimeout
+// Passing an anonymous function into setTimeout
 setTimeout(() => {
-  console.log("This happened after 2 seconds!");
+  console.log("This logs after 2 seconds!");
 }, 2000);
 ```
 
@@ -110,45 +117,128 @@ setTimeout(() => {
 
 ## 5. Scope
 
-**Scope** is the concept of where a variable "lives" and who has access to it.
+Defines where variables can be accessed.
 
-- **Global Scope:** A variable created _outside_ of any function. Everyone can see it and use it.
-- **Local Scope:** A variable created _inside_ a function. It is trapped inside that function. The outside world doesn't know it exists.
-
-### Syntax Example:
+- **Global Scope:** Variables declared outside any function. Accessible everywhere.
+- **Local (Block) Scope:** Variables declared inside a function or block `{}`. Only accessible inside that block.
 
 ```javascript
-let secretBase = "The Moon"; // Global scope
+let globalName = "Alex"; // Global
 
-function spyMission() {
-  let secretCode = "007"; // Local scope
-  console.log(`Mission at ${secretBase} using code ${secretCode}`);
+function test() {
+  let localName = "Sam"; // Local
+  console.log(globalName); // Works!
 }
 
-spyMission();
-// console.log(secretCode); // ERROR! secretCode is not defined here.
+// console.log(localName); // ❌ ReferenceError: localName is not defined
 ```
 
-### 🏋️ Micro-Exercise: The Shadow
+### 🏋️ Micro-Exercise: The Scope Check
 
-Create a global variable `let x = 100;`. Then, write a function. Inside the function, write `let x = 50;` and `console.log(x)`. Finally, `console.log(x)` _outside_ the function. Run your code to see which `x` "wins" in different places. This is called "Variable Shadowing" (local variables inside a function take priority over global ones with the same name).
+**1. Setup:**
+```javascript
+let speedLimit = 60;
+```
+
+**2. Your Task:**
+- Write a function called `checkSpeed`.
+- Inside the function, create a local variable `let currentSpeed = 80;`.
+- Still inside the function, log both `speedLimit` and `currentSpeed`.
+- Call `checkSpeed()`.
+- Outside the function, log `speedLimit`.
+- Try to log `currentSpeed` outside the function and observe the error.
+
+**3. Expected Console Output:**
+```text
+60 80
+60
+ReferenceError: currentSpeed is not defined
+```
+
+---
+
+## ⚠️ Common Pitfalls
+
+1.  **The Implicit Return Curly Braces Trap:**
+    Adding curly braces `{}` to an arrow function turns off the implicit return. You must use the `return` keyword explicitly if braces are present!
+    ```javascript
+    const add = (a, b) => { a + b }; // ❌ Returns undefined!
+    const add = (a, b) => a + b; //  Correct
+    const add = (a, b) => { return a + b; }; //  Correct
+    ```
+2.  **Referencing Local Variables Globally:**
+    ```javascript
+    function test() {
+      let x = 10;
+    }
+    console.log(x); // ❌ ReferenceError: x is not defined (x is trapped in test's scope)
+    ```
+3.  **Forgetting Parentheses to Execute:**
+    ```javascript
+    function greet() {
+      return "Hi!";
+    }
+    console.log(greet); // ❌ Logs the function definition itself, not the return value.
+    console.log(greet()); //  Logs "Hi!"
+    ```
+
+---
+
+## 🧠 Brain Teasers & Concept Checks
+
+Predict the outputs of the following code snippets:
+
+1.  What does this output?
+    ```javascript
+    const value = () => 5;
+    console.log(value() + 5);
+    ```
+2.  What does this output?
+    ```javascript
+    let x = 5;
+    function printX() {
+      let x = 10;
+      console.log(x); // (Note: Variable Shadowing warning: avoid this in clean code)
+    }
+    printX();
+    ```
+3.  What happens here?
+    ```javascript
+    const sayHi = () => {
+      console.log("Hi");
+      return "Hello";
+      console.log("Bye"); // Will this run?
+    };
+    sayHi();
+    ```
 
 ---
 
 ## 🚀 Stage 3 Project: The Personal Finance Assistant
 
-Let's build a set of functions that could be the backend for a budgeting app!
+Build three functions that help with monthly budgeting.
 
-**The Goal:** Create a series of functions to calculate a monthly budget, determine a savings goal, and apply a tax to specific expenses.
+**1. Starter Setup:**
+```javascript
+const annualSalary = 60000;
+const savingsPercentage = 0.20; // 20%
+const laptopBasePrice = 1200;
+const salesTaxRate = 0.08; // 8%
+```
 
-**Instructions:**
+**2. Your Task:**
+1.  **Income Calculator:** Write an arrow function `calculateMonthlyIncome` that takes `annualSalary` as a parameter and returns the monthly income (salary divided by 12).
+2.  **Savings Goal:** Write an arrow function `calculateSavings` that takes `monthlyIncome` and `savingsPercentage` as parameters and returns the amount to save.
+3.  **Tax Applier:** Write an arrow function `applyTax` that takes `expenseAmount` and `taxRate` as parameters and returns the total cost including tax: `expenseAmount * (1 + taxRate)`.
+4.  **Integration:**
+    - Call `calculateMonthlyIncome(annualSalary)` and save it in a variable named `monthlyIncome`.
+    - Call `calculateSavings(monthlyIncome, savingsPercentage)` and save it in a variable named `savingsGoal`.
+    - Call `applyTax(laptopBasePrice, salesTaxRate)` and save it in a variable named `laptopTotalPrice`.
+    - Log a summary displaying these calculated values using a template literal.
 
-1.  **The Income Calculator:** Write an arrow function called `calculateMonthlyIncome` that takes an `annualSalary` as a parameter and **returns** the monthly income (annual divided by 12).
-2.  **The Savings Goal:** Write a function called `calculateSavings` that takes `monthlyIncome` and a `savingsPercentage` (e.g., 0.20 for 20%). It should **return** how much money should be saved that month.
-3.  **The Tax Applier:** Write a function called `applyTax` that takes an `expenseAmount` and a `taxRate` (e.g., 0.08 for 8%). It should **return** the total cost of the expense including tax.
-4.  **Putting it together:**
-    - Set up a variable for your annual salary (e.g., $60,000).
-    - Call `calculateMonthlyIncome` and save the result in a variable.
-    - Call `calculateSavings` using your monthly income to find out how much to save.
-    - You buy a new laptop for $1,200 with an 8% tax. Call `applyTax` to find the final price.
-    - Log a summary sentence using template literals showing your monthly income, your savings goal, and the final price of the laptop.
+**3. Expected Console Output:**
+```text
+Monthly Income: $5000
+Monthly Savings Goal (20%): $1000
+Laptop Price with Tax: $1296
+```
