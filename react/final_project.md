@@ -1,68 +1,68 @@
 # The Final Boss Project: The Personal Developer Dashboard
 
-This project is the ultimate test of your friends' React journey. Instead of a single-feature app, they will build a multi-page, data-driven dashboard that mimics a professional developer's workspace. It combines every concept from the initial component mental model to complex asynchronous data flow.
+This project is the ultimate test of your React journey. Instead of a single-feature app, you will build a multi-page, data-driven dashboard that mimics a professional developer's workspace. It combines every concept from the initial component mental model to complex asynchronous data flow.
 
 ---
 
-## **Project Overview**
+## Project Overview
 
-The dashboard will consist of four main modules:
-
-1. **A Real-time Weather & Greeting Header** (Stages 1 & 4).
-
-2. **A Pomodoro Focus Timer** (Stage 3).
-
-3. **A Persistent Notes Manager** (Stages 2 & 5).
-
-4. **A "Tech News" Feed** (Stages 4 & 6).
+The developer dashboard consists of four main modules:
+1. **A Real-time Weather & Greeting Header** (Stages 1 & 4)
+2. **A Pomodoro Focus Timer** (Stage 3)
+3. **A Persistent Notes Manager** (Stages 2 & 5)
+4. **A "Tech News" Feed** (Stages 4 & 6)
 
 ---
 
-## **Step 1: Architecture & Routing (Stage 6)**
+## 1. Starter Setup
 
-First, set up the "house" that holds all the rooms.
-
-- **The Router:** Wrap the app in `<BrowserRouter>` and create two main routes: `/dashboard` and `/settings`.
-
-- **Navigation:** Create a sidebar component using `<Link>` tags to move between pages without refreshing the browser.
-
-## **Step 2: The Header & Weather (Stages 1 & 4)**
-
-- **Greeting:** Use a basic functional component to display a personalized greeting based on the user's name (passed via props).
-
-- **Weather API:** Use `useEffect` with an empty dependency array to fetch local weather data from an API (like OpenWeather).
-
-- **Conditional Rendering:** Show a loading spinner while the data is fetching, then display the temperature and a weather icon.
-
-## **Step 3: The Pomodoro Timer (Stage 3)**
-
-- **Logic:** Create a `useState` variable for `secondsRemaining` (initialized to 1500 for 25 minutes).
-
-- **Interactivity:** Add "Start", "Pause", and "Reset" buttons that update the state.
-
-- **Side Effect:** Use `useEffect` to trigger a `setInterval` that decrements the timer every second only when the timer is active.
-
-## **Step 4: The Notes Manager (Stage 5)**
-
-This is where they practice "Lifting State Up".
-
-- **Source of Truth:** Keep the `notes` array in the main `Dashboard` parent component.
-
-- **Mapping:** Pass the array down to a `NoteList` component to render each note with a unique `key`.
-
-- **Filtering:** Add a "Delete" button to each note that triggers a function in the parent to `.filter()` the array and update state.
-
-## **Step 5: Settings & Global Theme (Stage 5)**
-
-- **Theme Toggle:** In the `/settings` route, create a toggle for "Dark Mode."
-- **Shared Context:** Instead of lifting state and prop drilling, use the **Context API** to create a `ThemeContext`. Wrap your app in the provider so both the Dashboard and the Settings page can access and update the `isDarkMode` state directly!
+Ensure you have a React project initialized. Install `react-router-dom` for navigation:
+```bash
+npm install react-router-dom
+```
+Create a clean directory structure containing a `components/` folder for UI segments, a `context/` folder for state context providers, and a `pages/` folder for routing targets (`Dashboard.jsx`, `Settings.jsx`).
 
 ---
 
-## **Final Polish & Submission**
+## 2. Your Task
 
-To finish the curriculum, encourage your friends to:
+Implement the developer dashboard step-by-step:
 
-- **Clean Code:** Destructure all props for readability.
-- **Deployment:** Host their dashboard on a platform like Vercel or Netlify.
-- **Documentation:** Write a `README.md` explaining how they managed the state and which APIs they used.
+### Step 1: Architecture & Routing (Stage 6)
+- Set up `<BrowserRouter>` at the root of your application.
+- Define two primary routes: `/dashboard` (rendering the main `<Dashboard />` page) and `/settings` (rendering the `<Settings />` page).
+- Create a persistent sidebar component using `<NavLink>` tags to switch pages.
+
+### Step 2: The Header & Weather (Stages 1 & 4)
+- Create a `<Header />` component that receives the user's name via props and displays a personalized greeting.
+- Use `useEffect` with an empty dependency array to fetch current weather data from a free weather API (e.g., OpenWeatherMap or wttr.in).
+- Implement conditional rendering to display a "Loading..." message or spinner while data is being fetched, transitioning to display the temperature and description once loaded.
+
+### Step 3: The Pomodoro Timer (Stage 3)
+- Create a `<Timer />` component.
+- Maintain `secondsRemaining` in state (initialized to `1500` for 25 minutes) alongside an `isActive` boolean state.
+- Add "Start", "Pause", and "Reset" buttons.
+- Use `useEffect` to manage a `setInterval` that decrements `secondsRemaining` every second *only* when `isActive` is true. Ensure you return a cleanup function to clear the interval when paused, unmounted, or reset!
+
+### Step 4: The Notes Manager (Stage 5)
+- In `<Dashboard />`, maintain a state array of notes (each note object having a unique, stable `id` and a `text` string).
+- Create a `<NoteForm />` component to add new notes (using controlled input).
+- Create a `<NoteList />` component to render the notes, passing a function callback to handle note deletion.
+- Map the notes to list items using the stable note `id` as the `key`.
+
+### Step 5: Settings & Global Theme (Stage 5)
+- Create a `ThemeContext` and export a custom `useTheme` hook.
+- Implement a `ThemeProvider` component managing the `isDarkMode` state. Wrap your entire application in the provider.
+- In your `<Settings />` page, render a checkbox or button that toggles `isDarkMode` using the context value.
+- Style your dashboard and page elements to adapt their colors dynamically depending on the global theme.
+
+---
+
+## 3. Expected Outcome
+
+A responsive, fully interactive dashboard with:
+- Fluid navigation between the Dashboard and Settings pages with zero page reloads.
+- A functional Pomodoro timer that counts down smoothly without memory leaks.
+- A fully active Notes manager that lets you add and delete notes, immediately updating the UI.
+- A global Dark Mode switch on the Settings page that instantly updates the styles across all pages.
+- Clean console logs with no unique key warning messages or React render-phase state updates warnings.
